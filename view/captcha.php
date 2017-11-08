@@ -9,10 +9,10 @@
             <input type="text" class="form-control" id="jsession" value="<?= Session::get('jsessionId')?>"></div>
         <div class="form-group"> <label for="login" >Login</label>
             <select class="form-control" id="login" value="alt.man">
-                <option value="alt.man">alt.man</option>
-                <option value="alt.test1">alt.test1</option>
-                <option value="theelizarov">theelizarov</option>
-                <option value="theshutov">theshutov</option>
+                <option value="enter">enter</option>
+                <option value="enter">enter</option>
+                <option value="enter">enter</option>
+                <option value="enter">enter</option>
             </select>
         </div>
         <div class="form-group"> <label for="path">Password</label>

@@ -12,7 +12,7 @@ $device = $_POST['device'];
 $login = trim(mb_strtolower($login));
 
 $kontur = Session::get('kontur');
-$url = Kontur::getUrl($kontur) . '/v1.0/auth/login';
+$url = Kontur::getUrl($kontur) . 'enterlogin';
 
 $params = Kontur::getParams($kontur);
 $params = array_merge($params, ['login' => urlencode($login), 'password' => urlencode($path), 

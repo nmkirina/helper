@@ -7,7 +7,7 @@ include_once 'Session.php';
 $kontur = $_POST['kontur'];
 
 Session::set('kontur', $kontur);
-$url = Kontur::getUrl($kontur) . '/v1.0/auth/captcha';
+$url = Kontur::getUrl($kontur) . 'enteraptcha';
 
 $params = Kontur::getParams($kontur);
 $result = (new Curl($url, $params))->exec();

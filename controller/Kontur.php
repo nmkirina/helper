@@ -11,13 +11,13 @@ class Kontur
     {
         switch ($kontur) {
             case self::LOCAL:
-                return 'http://rzd.local';
+                return 'localenter';
             case self::TEST: 
-                return 'http://test.rzd.altarix.org:8889';
+                return 'enter';
             case self::UAT:
-                return 'http://uat.rzd.altarix.org:8889';
+                return 'enter';
             case self::EKMP:
-                return 'https://ekmp.rzd.ru';        
+                return 'enter';        
         }
     }
     
