@@ -7,13 +7,16 @@
             <input type="text" class="form-control" id="captcha-value"></div>
         <div class="form-group"> <label for="jsession">Jsession ID</label>
             <input type="text" class="form-control" id="jsession" value="<?= Session::get('jsessionId')?>"></div>
+        <div class="form-group"><label for="user-list">Users</label>
+            <ul>
+                <li>TheShutov-123456</li>
+                <li>TheElizarov-test1234</li>
+                <li>alt.test1-123456</li>
+                <li>alt.man-qazxswedc</li>
+            </ul>
+        </div>
         <div class="form-group"> <label for="login" >Login</label>
-            <select class="form-control" id="login" value="alt.man">
-                <option value="enter">enter</option>
-                <option value="enter">enter</option>
-                <option value="enter">enter</option>
-                <option value="enter">enter</option>
-            </select>
+            <input type="text" class="form-control" id="login" value="alt.man">                
         </div>
         <div class="form-group"> <label for="path">Password</label>
             <input type="text" class="form-control" id="path" value="qazxswedc"></div>

@@ -1,4 +1,5 @@
 <?php
+include_once '../data/Config.php';
 
 class ImageFromBase64
 {
@@ -7,7 +8,7 @@ class ImageFromBase64
     public function __construct($base64) 
     {
         $this->imageName();
-        $fp = fopen('/home/irina/projects/log-reader/tmp/' . $this->filename, "wb");
+        $fp = fopen(Config::PATH_TMP . $this->filename, "wb");
         $this->saveImageName();
         fwrite($fp, base64_decode($base64));
         fclose($fp);        
@@ -17,7 +18,7 @@ class ImageFromBase64
     {
         session_start();        
         $imageName = $_SESSION['imageName'];
-        unlink('/home/irina/projects/log-reader/tmp/' . $imageName);
+        unlink(Config::PATH_TMP . $imageName);
         session_write_close();
     }
     

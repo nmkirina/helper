@@ -1,4 +1,5 @@
 <?php
+include_once '../data/Config.php';
 
 class Kontur
 {
@@ -11,13 +12,13 @@ class Kontur
     {
         switch ($kontur) {
             case self::LOCAL:
-                return 'localenter';
+                return Config::URL_LOCAL;
             case self::TEST: 
-                return 'enter';
+                return Config::URL_TEST;
             case self::UAT:
-                return 'enter';
+                return Config::URL_UAT;
             case self::EKMP:
-                return 'enter';        
+                return Config::URL_EKMP;
         }
     }
     

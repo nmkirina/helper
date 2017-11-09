@@ -1,31 +1,32 @@
 <?php
-include_once 'Curl.php';
-include_once 'Kontur.php';
-include_once 'ImageFromBase64.php';
-include_once 'Session.php';
+include_once 'BaseService.php';
 
-$captcha = $_POST['captcha'];
-$login = $_POST['login'];
-$path = $_POST['path'];
-$device = $_POST['device'];
-
-$login = trim(mb_strtolower($login));
-
-$kontur = Session::get('kontur');
-$url = Kontur::getUrl($kontur) . 'enterlogin';
-
-$params = Kontur::getParams($kontur);
-$params = array_merge($params, ['login' => urlencode($login), 'password' => urlencode($path), 
-    'deviceGuid' => $device,
-    'captcha' => ['value' => $captcha, 'jsessionId' => Session::get('jsessionId')]]);
-$result = (new Curl($url, $params))->exec();
-$result = json_decode($result);
-if (!$result->errorCode){
-    ImageFromBase64::deleteImage();
-    Session::clear(['jsessionId', 'kontur']);
-    echo $result->result->sessionId;
-    die;
+class ReadCaptcha extends BaseService
+{
+    public function clear() {
+        ImageFromBase64::deleteImage();
+        parent::clear();
+    }
+    
+    public function requestParams() {
+        return array_merge($this->baseParams(), 
+                [
+                    'login' => urlencode($this->params['login']), 
+                    'password' => urlencode($this->params['path']), 
+                    'deviceGuid' => $this->params['device'],
+                    'captcha' => [
+                                    'value' => $this->params['captcha'], 
+                                    'jsessionId' => Session::get(Config::PARAM_JSESSIONID)
+                                 ]
+                ]);
+    }
 }
 
-echo 'Error';
-die;
+$readCaptcha = new ReadCaptcha(Config::METHOD_LOGIN, ['captcha', 'login', 'path', 'device']);
+$result = $readCaptcha->response();
+$readCaptcha->clear();
+if(!$result->errorCode){
+    $readCaptcha->returnAnswer($result->result->sessionId);
+} else {
+    $readCaptcha->returnAnswer($result->errorMessage);
+}
