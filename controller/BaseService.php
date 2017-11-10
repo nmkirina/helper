@@ -18,13 +18,17 @@ abstract class BaseService
                 $this->params[$param] = $_POST[$param];
             }
         }
-        $this->kontur = Session::get(Config::PARAM_KONTUR);
+        $this->setKontur();
         $this->url = Kontur::getUrl($this->kontur) . $method;
     }
     
-    public function returnAnswer($answer)
+    public function returnAnswer($answer, $error = null)
     {
-        echo $answer;
+        if(!$error){
+            echo $answer;
+        } else {
+            echo $error;
+        }
         die;
     }
     
@@ -42,7 +46,8 @@ abstract class BaseService
     public function baseParams()
     {
         return Kontur::getParams($this->kontur);
-    }
-    
-    abstract protected function requestParams(); 
+    }    
+            
+    abstract protected function requestParams();
+    abstract protected function setKontur();
 }

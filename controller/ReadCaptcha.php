@@ -20,13 +20,17 @@ class ReadCaptcha extends BaseService
                                  ]
                 ]);
     }
+    
+    public function setKontur() {
+        $this->kontur = Session::get(Config::PARAM_KONTUR);
+    }
+    
+    public function returnAnswer($answer, $error = null) {
+        $this->clear();
+        parent::returnAnswer($answer, $error);
+    }
 }
 
-$readCaptcha = new ReadCaptcha(Config::METHOD_LOGIN, ['captcha', 'login', 'path', 'device']);
+$readCaptcha = new ReadCaptcha(Config::METHOD_CAPTCHA, ['captcha', 'login', 'path', 'device']);
 $result = $readCaptcha->response();
-$readCaptcha->clear();
-if(!$result->errorCode){
-    $readCaptcha->returnAnswer($result->result->sessionId);
-} else {
-    $readCaptcha->returnAnswer($result->errorMessage);
-}
+$readCaptcha->returnAnswer($result->result->sessionId, $result->errorMessage);
