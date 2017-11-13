@@ -6,6 +6,7 @@ class ConfigMain
     
     const METHOD_CAPTCHA = '--captcha--';
     const METHOD_LOGIN = '--login--';
+    const METHOD_ERROR10000 = '--error10000--';
     
     const URL_LOCAL = '--local--';
     const URL_TEST = '--test--';

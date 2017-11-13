@@ -1,4 +1,3 @@
-<script src="../js/session.js"></script>
 <ul class="session-list nav nav-pills">
     <li><a href="" id="local">Local</a></li>
     <li><a href="" id="test">Test</a></li>

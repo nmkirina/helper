@@ -4,6 +4,7 @@
         <li><a href="#" id="rzd">Сервисы - логи</a></li>
         <li><a href="#" id="access">Access</a></li>
         <li><a href="#" id="session">Сессия</a></li>
+        <li><a href="#" id="error">Ошибка</a></li>
     </ul>       
 </div>
 <script src="../js/menu.js"></script>
