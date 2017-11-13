@@ -25,12 +25,15 @@ class ReadCaptcha extends BaseService
         $this->kontur = Session::get(Config::PARAM_KONTUR);
     }
     
-    public function returnAnswer($answer, $error = null) {
-        $this->clear();
-        parent::returnAnswer($answer, $error);
+    public function answer($result) {
+        if(!$result->errorCode) {
+            $this->returnAnswer($result->result->sessionId); 
+            $this->clear();
+        } else {
+            $this->returnAnswer($result->errorMessage);
+        }
     }
 }
 
-$readCaptcha = new ReadCaptcha(Config::METHOD_CAPTCHA, ['captcha', 'login', 'path', 'device']);
-$result = $readCaptcha->response();
-$readCaptcha->returnAnswer($result->result->sessionId, $result->errorMessage);
+$readCaptcha = new ReadCaptcha(Config::METHOD_LOGIN, ['captcha', 'login', 'path', 'device']);
+$readCaptcha->response();

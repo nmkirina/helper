@@ -10,7 +10,9 @@ abstract class BaseService
     public $params;
     public $url;
     public $kontur;
-    
+    public $result;
+
+
     public function __construct($method, $params) {
         foreach ($params as $param)
         {
@@ -22,20 +24,17 @@ abstract class BaseService
         $this->url = Kontur::getUrl($this->kontur) . $method;
     }
     
-    public function returnAnswer($answer, $error = null)
+    public function returnAnswer($answer)
     {
-        if(!$error){
-            echo $answer;
-        } else {
-            echo $error;
-        }
+        echo $answer;
         die;
     }
     
     public function response()
     {
-        $result = (new Curl($this->url, $this->requestParams()))->exec();
-        return json_decode($result);
+        $response = (new Curl($this->url, $this->requestParams()))->exec();
+        $result = json_decode($response);
+        $this->answer($result);
     }
     
     public function clear()
@@ -50,4 +49,5 @@ abstract class BaseService
             
     abstract protected function requestParams();
     abstract protected function setKontur();
+    abstract public function answer($result);
 }
