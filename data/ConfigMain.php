@@ -11,6 +11,7 @@ class ConfigMain
     const URL_LOCAL = '--local--';
     const URL_TEST = '--test--';
     const URL_UAT = '--uat--';
+    const URL_UAT2 = '--uat2--';
     const URL_EKMP = '--ekmp--';
     
     const PARAM_JSESSIONID = 'jsessionId';

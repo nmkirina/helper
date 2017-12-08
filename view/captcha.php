@@ -1,6 +1,7 @@
 <script src="../js/captcha.js"></script>
 <?php include_once '../controller/Session.php';?>
 <?php $image = $_POST['image'];?>
+<h1><?= Session::get('kontur')?></h1>
 <img src=<?="/tmp/" . $image . ""?>>
 <form>
         <div class="form-group"> <label for="captcha-value">Captcha</label>
