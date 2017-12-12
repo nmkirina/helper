@@ -6,6 +6,7 @@ class Kontur
     const LOCAL = 'local';
     const TEST = 'test';
     const UAT = 'uat';
+    const UAT2 = 'uat2';
     const EKMP = 'ekmp';
 
     public static function getUrl($kontur)
@@ -17,6 +18,8 @@ class Kontur
                 return Config::URL_TEST;
             case self::UAT:
                 return Config::URL_UAT;
+            case self::UAT2:
+                return Config::URL_UAT2;
             case self::EKMP:
                 return Config::URL_EKMP;
         }
@@ -24,7 +27,7 @@ class Kontur
     
     public static function getParams($kontur)
     {
-        if($kontur == self::UAT || $kontur == self::EKMP) {
+        if($kontur == self::UAT || $kontur == self::EKMP || $kontur == self::UAT2) {
             return ['protocolVersion' => 2];
         }
         return [];
