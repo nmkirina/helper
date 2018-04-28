@@ -3,12 +3,7 @@
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 require __DIR__ . '/PhpSpreadsheet/samples/Header.php';
-const FIELDS = [
-    'dataType' => 'H',
-    'length' => 'I',
-    'defaultValue' => 'F',
-    'nullable' => 'G'
-];
+const FIELDS = ['dataType','length','defaultValue','nullable'];
 
     $inputFileType = 'Xls';
     $inputFileNames = [__DIR__ . '/test.xls', '/home/irina/tmp/download.xls'];
@@ -24,7 +19,15 @@ const FIELDS = [
     }
 
     foreach ($sheetData[0] as $data) {
-        $compare[$data['B']][$data['C']][$data['D']] = [
+        $test[$data['B']][$data['C']][$data['D']] = [
+            'dataType' => $data['H'],
+            'length' => $data['I'],
+            'defaultValue' => $data['F'],
+            'nullable' => $data['G']
+        ];
+    }
+    foreach ($sheetData[1] as $data) {
+        $prod[$data['B']][$data['C']][$data['D']] = [
             'dataType' => $data['H'],
             'length' => $data['I'],
             'defaultValue' => $data['F'],
@@ -32,28 +35,31 @@ const FIELDS = [
         ];
     }
     $result = [];
-    foreach ($sheetData[1] as $data) {
-        if (
-                key_exists($data['B'], $compare) 
-                && key_exists($data['C'], $compare[$data['B']]) 
-                && key_exists($data['D'], $compare[$data['B']][$data['C']])
-            ) {
-            foreach (FIELDS as $key => $litter) {
-                if ($compare[$data['B']][$data['C']][$data['D']][$key] != $data[$litter]) {
-                    $result[$data['B']][$data['C']][$data['D']][$key]['prod'] = $compare[$data['B']][$data['C']][$key];
-                    $result[$data['B']][$data['C']][$data['D']][$key]['test'] = $data[$litter];
+    
+    foreach ($prod as $prodSchema => $schema) {
+        if (key_exists($prodSchema, $test)) {
+            foreach ($schema as $prodTable => $table) {
+                if(key_exists($prodTable, $test[$prodSchema])) {
+                    foreach ($table as $prodField => $field) {
+                        if (key_exists($prodField, $test[$prodSchema][$prodTable])) {
+                            foreach (FIELDS as $fieldName) {
+                                if ((!is_null($field[$fieldName]) && !is_null($test[$prodSchema][$prodTable][$prodField][$fieldName])) 
+                                        && ($field[$fieldName] != $test[$prodSchema][$prodTable][$prodField][$fieldName])) {
+                                    $result[$prodSchema][$prodTable][$prodField][$fieldName]['prod'] = $field[$fieldName];
+                                    $result[$prodSchema][$prodTable][$prodField][$fieldName]['test'] = $test[$prodSchema][$prodTable][$prodField][$fieldName];
+                                }
+                            }
+                        } else {
+                            $result[$prodSchema][$prodTable]['prodField'][$prodField] = $field;
+                        }
+                    } 
+                } else {
+                    $result[$prodSchema]['prodTable'][$prodTable] = $table;
                 }
             }
-        } elseif (key_exists($data['B'], $compare)) {
-                $result[$data['B']]['prod'] = $compare[$data['B']];
-                $result[$data['B']]['test'] = null;
-        } elseif (key_exists($data['C'], $compare[$data['B']])) {
-            $result[$data['B']][$data['C']]['prod'] = $compare[$data['B']][$data['C']];
-        }else {
-            $result['prod'] = $compare[$data['B']];
-            $result['test'] = null;
+        } else {
+            $result['prodSchema'][$prodSchema] = $schema;
         }
-        
     }
     
 var_dump($result);
