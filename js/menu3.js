@@ -15,17 +15,13 @@
         versionList("../view/sessionMenu.php");
     });
     
-    $('#error').click(function(){
-        versionList("../view/errorMenu.php");
-    });
-    
-    function getLogs(log)
+    function getLogs(log, url = "../controller/LogsReader.php")
     {
         $.ajax({
             type: "POST",
             cache: false,
             data: {"log": log},
-            url: "../controller/LogsReader.php",
+            url: url,
             success: function(data){
                 $('#content').empty();
                 $('#content').html(data);
@@ -36,16 +32,13 @@
     }
     
     $('#logs').click(function(){       
-        getLogs('10000_errors.log');
-    });
-    
-    $('#rzd').click(function(){       
-        getLogs('rzdServices.log');
+        getLogs('/runtime/logs/10000_errors.log');
     });
     
     $('#access').click(function(){       
-        getLogs('access.log');
+        getLogs('/runtime/logs/access.log');
     });
 
-
-
+    $('#error').click(function(){
+        getLogs('/error.log', "../controller/ErrorLogReader.php");
+    });
