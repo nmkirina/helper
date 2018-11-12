@@ -8,6 +8,7 @@ class Kontur
     const UAT = 'uat';
     const UAT2 = 'uat2';
     const EKMP = 'ekmp';
+    const PREPROD = 'preprod';
 
     public static function getUrl($kontur)
     {
@@ -22,12 +23,14 @@ class Kontur
                 return Config::URL_UAT2;
             case self::EKMP:
                 return Config::URL_EKMP;
+            case self::PREPROD:
+                return Config::URL_PREPROD;
         }
     }
     
     public static function getParams($kontur)
     {
-        if($kontur == self::UAT || $kontur == self::EKMP || $kontur == self::UAT2) {
+        if($kontur == self::UAT || $kontur == self::EKMP || $kontur == self::UAT2 || $kontur == self::PREPROD) {
             return ['protocolVersion' => 2];
         }
         return [];
